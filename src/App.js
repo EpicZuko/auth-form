@@ -1,5 +1,11 @@
+import CreateAccount from './components/CreateAccount'
+
 function App() {
-   return <div />
+   return (
+      <div>
+         <CreateAccount />
+      </div>
+   )
 }
 
 export default App
