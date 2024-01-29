@@ -126,6 +126,7 @@ const StyledP = styled.p`
    font-style: normal;
    font-weight: 500;
    line-height: 22px;
+   margin-top: 24px;
 `
 const ErrorText = styled.p`
    color: red;
