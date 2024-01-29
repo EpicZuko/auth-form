@@ -103,6 +103,8 @@ export const loginPost = createAsyncThunk(
             method: 'POST',
             body: props.code,
          })
+
+         showSuccessMessage('Вы успешно авторизовались!')
          LocalStorageFunction({
             type: 'removeItem',
             key: 'login',
@@ -115,8 +117,6 @@ export const loginPost = createAsyncThunk(
                access: response.accessF,
             },
          })
-
-         showSuccessMessage('Вы успешно авторизовались!')
          return response
       } catch (error) {
          showErrorMessage('Неверный логин или пароль')
