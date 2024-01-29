@@ -106,6 +106,7 @@ const CreateAccount = () => {
    const buttonClick = async () => {
       dispatch(
          authPost({
+            role: 'register',
             auth: {
                password: createPassword.password,
                password_confirm: createPassword.password_confirm,

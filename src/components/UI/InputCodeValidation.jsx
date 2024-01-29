@@ -5,10 +5,9 @@ const InputCodeValidation = (props) => {
    return (
       <StyledDiv>
          <StyledInput
-            type="number"
-            min="0"
             onChange={props.onChange}
             value={props.value}
+            {...props}
          />
          {props.value === '' && <StyledSpan />}
       </StyledDiv>
@@ -44,6 +43,9 @@ const StyledInput = styled.input`
    &[type='number'] {
       -moz-appearance: textfield;
    }
+   background: var(--Grey-Extra-Light, #f4f4f4);
+   border-radius: 12px;
+   border: none;
 `
 const StyledSpan = styled.span`
    position: absolute;
