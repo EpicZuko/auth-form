@@ -50,3 +50,44 @@ const loginSlice = createSlice({
 
 export const { closemodal, clearLogin } = loginSlice.actions
 export default loginSlice.reducer
+
+export const codeEmailPost = createAsyncThunk(
+   'codeEmail/codeEmailPost',
+   // eslint-disable-next-line consistent-return
+   async (props, { rejectWithValue }) => {
+      try {
+         const response = await ApiFetch({
+            url: 'authentication/email-confirm/',
+            method: 'POST',
+            body: props.code,
+         })
+         return response
+      } catch (error) {
+         return rejectWithValue(error)
+      }
+   }
+)
+const initialStateCodeEmail = {
+   status: null,
+   error: null,
+}
+export const codeEmailSlice = createSlice({
+   name: 'codeEmail',
+   initialState: initialStateCodeEmail,
+   reducers: {},
+   extraReducers: (builder) => {
+      builder
+         .addCase(codeEmailPost.pending, (state) => {
+            state.status = 'pending'
+         })
+         .addCase(codeEmailPost.fulfilled, (state) => {
+            state.status = 'success'
+            state.error = false
+         })
+         .addCase(codeEmailPost.rejected, (state) => {
+            state.status = 'error'
+            state.error = true
+         })
+   },
+})
+export const codeEmailAction = codeEmailSlice.actions
