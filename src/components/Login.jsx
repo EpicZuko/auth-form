@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { loginPost } from '../services/reducerSlice/LoginSlice'
+import Toastify from './Toastify'
 import Button from './UI/Button'
 import Input from './UI/Input'
 
@@ -26,40 +27,55 @@ const Login = () => {
       dispatch(loginPost({ code: loginValue }))
    }
    return (
-      <StyledDiv>
-         <Input
-            name="username"
-            placeholder="Введи логин"
-            type="text"
-            onChange={loginValueHandler}
-            value={loginValue.username}
-         />
-         <Input
-            name="password"
-            placeholder="Введи пароль"
-            variant="optic"
-            type={showPassword === false ? 'password' : 'text'}
-            onClickImgOptic={toggleConfirmPasswordVisibility}
-            value={loginValue.password}
-            onChange={loginValueHandler}
-         />
-         <StyledDivButton>
-            <Button type="button" variant="toComeIn" onClick={clickButton}>
-               Войти
-            </Button>
-            <StyledP>У меня еще нет аккаунта</StyledP>
-         </StyledDivButton>
-      </StyledDiv>
+      <>
+         <Toastify />
+         <StyledDiv>
+            <StyledH1>Вэлком бэк!</StyledH1>
+            <Input
+               name="username"
+               placeholder="Введи логин"
+               type="text"
+               onChange={loginValueHandler}
+               value={loginValue.username}
+            />
+            <Input
+               name="password"
+               placeholder="Введи пароль"
+               variant="optic"
+               type={showPassword === false ? 'password' : 'text'}
+               onClickImgOptic={toggleConfirmPasswordVisibility}
+               value={loginValue.password}
+               onChange={loginValueHandler}
+            />
+            <StyledDivButton>
+               <Button type="button" variant="toComeIn" onClick={clickButton}>
+                  Войти
+               </Button>
+               <StyledP>У меня еще нет аккаунта</StyledP>
+            </StyledDivButton>
+         </StyledDiv>
+      </>
    )
 }
 
 export default Login
 
+const StyledH1 = styled.h1`
+   width: 274px;
+   color: var(--Grey-Extra-Dark, #212121);
+   text-align: center;
+   font-family: 'Mplus 1p';
+   font-size: 32px;
+   font-style: normal;
+   font-weight: 500;
+   line-height: normal;
+`
+
 const StyledDiv = styled.div`
    display: flex;
    flex-direction: column;
    align-items: center;
-   gap: 48px;
+   gap: 25px;
    width: 343px;
 `
 const StyledDivButton = styled.div`
