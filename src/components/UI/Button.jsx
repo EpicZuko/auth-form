@@ -47,7 +47,7 @@ const noStayButton = (props) => {
 const goOutButton = (props) => {
    return (
       props.variant === 'goOut' &&
-      'border:1px solid var(--Grey-Medium-Dark, #767676);width: 311px;color: var(--Button-color-Light, #292929);background: #FFF;'
+      'width: 311px;color: var(--Button-color-Light, #292929);background: #FFF;'
    )
 }
 const backButton = (props) => {
