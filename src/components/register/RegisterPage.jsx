@@ -1,14 +1,21 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import illstration from '../../assets/icons/img/illustration.svg'
 import CreateAccount from '../CreateAccount'
 import Button from '../UI/Button'
 
 const RegisterPage = () => {
+   const navigate = useNavigate()
+
+   const navigateButtonLogin = () => {
+      navigate('/login')
+   }
    return (
       <>
          <StyledDivButton>
-            <Button variant="back" /> <span>Назад</span>
+            <Button variant="back" onClick={navigateButtonLogin} />{' '}
+            <span>Назад</span>
          </StyledDivButton>
          <StyledDiv>
             <div>

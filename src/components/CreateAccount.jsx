@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { authPost } from '../services/reducerSlice/LoginSlice'
 import Toastify from './Toastify'
@@ -29,6 +30,9 @@ const CreateAccount = () => {
    const [isOpticPassword, setIsOpticPassword] = useState(false)
    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
    const dispatch = useDispatch()
+   const state = useSelector((state) => state.login)
+
+   const navigate = useNavigate()
    useEffect(() => {
       const isValidPassword =
          passwordValidity.length &&
@@ -38,8 +42,20 @@ const CreateAccount = () => {
          createPassword.password === createPassword.password_confirm &&
          emailValidity &&
          usernameValidity
+      if (state.status) {
+         navigate('codepage')
+      } else {
+         navigate('/')
+      }
       setIsButtonEnabled(isValidPassword)
-   }, [createPassword, emailValidity, usernameValidity, passwordValidity])
+   }, [
+      createPassword,
+      emailValidity,
+      usernameValidity,
+      passwordValidity,
+      state?.status,
+      navigate,
+   ])
 
    const createPasswordHandlerChangeValue = (event) => {
       const { name, value } = event.target
