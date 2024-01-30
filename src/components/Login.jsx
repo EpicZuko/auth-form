@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { loginPost } from '../services/reducerSlice/LoginSlice'
 import Toastify from './Toastify'
@@ -16,6 +17,7 @@ const Login = () => {
       setShowPassword((prevState) => !prevState)
    }
    const dispatch = useDispatch()
+   const navigate = useNavigate()
 
    const loginValueHandler = (event) => {
       setLoginValue((prevState) => ({
@@ -25,6 +27,9 @@ const Login = () => {
    }
    const clickButton = () => {
       dispatch(loginPost({ code: loginValue }))
+   }
+   const navigateRegisterPage = () => {
+      navigate('/')
    }
    return (
       <>
@@ -51,7 +56,9 @@ const Login = () => {
                <Button type="button" variant="toComeIn" onClick={clickButton}>
                   Войти
                </Button>
-               <StyledP>У меня еще нет аккаунта</StyledP>
+               <StyledP onClick={navigateRegisterPage}>
+                  У меня еще нет аккаунта
+               </StyledP>
             </StyledDivButton>
          </StyledDiv>
       </>
@@ -79,7 +86,7 @@ const StyledDiv = styled.div`
    width: 343px;
 `
 const StyledDivButton = styled.div`
-   margin-left: 15px;
+   margin-left: 34px;
 `
 const StyledP = styled.p`
    color: var(--Button-color-Light, #292929);
@@ -89,7 +96,7 @@ const StyledP = styled.p`
    font-style: normal;
    font-weight: 500;
    line-height: 24px; /* 150% */
-   width: 311px;
+   /* width: 311px; */
    flex-shrink: 0;
    cursor: pointer;
 `

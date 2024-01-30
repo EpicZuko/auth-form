@@ -17,9 +17,23 @@ export const authPost = createAsyncThunk(
             body: props.auth,
          })
          showSuccessMessage('Вы успешно авторизовались!')
+         LocalStorageFunction({
+            type: 'setItem',
+            key: 'login',
+            body: {
+               verificated: true,
+            },
+         })
          return response
       } catch (error) {
          showErrorMessage('Ошибка авторизации. Пожалуйста, попробуйте еще раз.')
+         LocalStorageFunction({
+            type: 'setItem',
+            key: 'login',
+            body: {
+               verificated: false,
+            },
+         })
          return rejectWithValue(error)
       }
    }
@@ -29,27 +43,45 @@ const initialState = {
    status: null,
    error: null,
    modal: false,
+   loggedIn: false,
+   user: 'user',
+   login: LocalStorageFunction({
+      type: 'getItem',
+      key: 'login',
+   }) || {
+      verificated: null,
+   },
 }
 
 const loginSlice = createSlice({
    name: 'login',
    initialState,
-   reducers: {},
+   reducers: {
+      login: (state, action) => {
+         state.loggedIn = true
+         state.user = action.payload
+      },
+      logout: (state, action) => {
+         state.status = action.payload.status
+         state.user = null
+         // сбросить другие поля состояния...
+      },
+   },
    extraReducers: (builder) => {
       builder
          .addCase(authPost.pending, (state) => {
             state.status = 'pending'
          })
          .addCase(authPost.fulfilled, (state) => {
-            state.status = 'success'
+            state.status = true
          })
          .addCase(authPost.rejected, (state) => {
-            state.status = 'error'
+            state.status = false
          })
    },
 })
 
-export const { closemodal, clearLogin } = loginSlice.actions
+export const { closemodal, clearLogin, login, logout } = loginSlice.actions
 export default loginSlice.reducer
 
 export const codeEmailPost = createAsyncThunk(
@@ -115,6 +147,7 @@ export const loginPost = createAsyncThunk(
             body: {
                refresh: response.refresh,
                access: response.accessF,
+               verificated: true,
             },
          })
          return response
@@ -130,6 +163,12 @@ const initialStateLogin = {
    error: null,
    refresh: null,
    access: null,
+   login: LocalStorageFunction({
+      type: 'getItem',
+      key: 'login',
+   }) || {
+      verificated: null,
+   },
 }
 
 export const loginLorbySlice = createSlice({
@@ -145,6 +184,7 @@ export const loginLorbySlice = createSlice({
             state.status = 'success'
             state.refresh = action.payload.refresh
             state.access = action.payload.access
+            state.verificated = action.payload.verificated
          })
          .addCase(loginPost.rejected, (state) => {
             state.error = 'error'
