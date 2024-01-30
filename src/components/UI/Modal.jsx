@@ -21,7 +21,9 @@ const Modall = ({ variant, onClose }) => {
                <StyledText>Выйти?</StyledText>
                <Button variant="goOut">Точно выйти?</Button>
                <Button variant="yesExactly">Да, точно</Button>
-               <Button variant="noStay">Нет, остаться</Button>
+               <Button variant="noStay" onClick={onClose}>
+                  Нет, остаться
+               </Button>
             </ModalContent>,
             ModalRoot
          )}
